@@ -12,6 +12,7 @@ namespace Bos.TeamService.Tests {
         {
             TeamsController controller = new TeamsController();
             List<Team> teams = new List<Team>(controller.GetAllTeams());
+            Assert.Equal(teams.Count, 2);
         }
     }
 }

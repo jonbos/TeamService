@@ -14,7 +14,7 @@ namespace TeamService.Controllers {
         [HttpGet]
         public IEnumerable<Team> GetAllTeams()
         {
-            return Enumerable.Empty<Team>();
+            return new Team[] {new Team("one"), new Team("two")};
         }
     }
 }
