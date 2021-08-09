@@ -29,9 +29,24 @@ build:
           dotnet build
     - script:
         name: test-run
-        cwd: src/Bos.TeamService
+        cwd: test/Bos.TeamService.Tests
         code: |
-          dotnet publish -o test
+          dotnet test
+    - script:
+        name: integration-test-restore
+        cwd: test/Bos.TeamService.Tests.Integration
+        code: |
+          dotnet restore
+    - script:
+        name: integration-test-build
+        cwd: test/Bos.TeamService.Tests.Integration
+        code: |
+          dotnet build
+    - script:
+        name: integration-test-run
+        cwd: test/Bos.TeamService.Tests.Integration
+        code: |
+          dotnet test
     - script:
         name: copy binary
         code: |

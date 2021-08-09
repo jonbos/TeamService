@@ -21,6 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Bos.TeamService\Bos.TeamService.csproj" />
       <ProjectReference Include="..\src\Bos.TeamService\Bos.TeamService.csproj" />
     </ItemGroup>
 
