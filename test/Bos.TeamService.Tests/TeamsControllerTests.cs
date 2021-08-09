@@ -34,6 +34,15 @@ namespace Bos.TeamService.Tests {
         }
 
         [Fact]
+        public void GetNonExistentTeamReturnsNotFound()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            Guid id = Guid.NewGuid();
+            var result = controller.GetTeam(id);
+            Assert.True(result is NotFoundResult);
+        }
+
+        [Fact]
         public async void CreateTeamsAddsTeamToList()
         {
             TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
