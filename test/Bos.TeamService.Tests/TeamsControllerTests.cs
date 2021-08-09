@@ -20,6 +20,20 @@ namespace Bos.TeamService.Tests {
         }
 
         [Fact]
+        public void GetTeamRetrievesTeam()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            string sampleName = "sample";
+            Guid id = Guid.NewGuid();
+            Team sampleTeam = new Team(sampleName, id);
+            controller.CreateTeam(sampleTeam);
+
+            Team retrievedTeam = (Team) (controller.GetTeam(id) as ObjectResult).Value;
+            Assert.Equal(sampleName, retrievedTeam.Name);
+            Assert.Equal(id, retrievedTeam.ID);
+        }
+
+        [Fact]
         public async void CreateTeamsAddsTeamToList()
         {
             TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
@@ -33,9 +47,9 @@ namespace Bos.TeamService.Tests {
             var actionResult = controller.GetAllTeams() as ObjectResult;
             var newTeamsRaw = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult)?.Value;
             List<Team> newTeams = new List<Team>(newTeamsRaw);
-            Assert.Equal(newTeams.Count, original.Count+1);
-            var sampleTeam = newTeams.FirstOrDefault( target => target.Name == "sample");
-            Assert.NotNull(sampleTeam);            
+            Assert.Equal(newTeams.Count, original.Count + 1);
+            var sampleTeam = newTeams.FirstOrDefault(target => target.Name == "sample");
+            Assert.NotNull(sampleTeam);
         }
     }
 }
