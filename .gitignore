@@ -2,3 +2,6 @@
 appsettings*.json
 **obj/
 **bin/
+/Bos.TeamService.sln.DotSettings.user
+**.wercker
+.DS_Store

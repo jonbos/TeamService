@@ -8,6 +8,7 @@ using TeamService.Models;
 using TeamService.Persistence;
 
 namespace TeamService.Controllers {
+    [Route("[controller]")]
     public class TeamsController : Controller {
         ITeamRepository repository;
 
@@ -22,12 +23,14 @@ namespace TeamService.Controllers {
             return this.Ok(repository.GetTeams());
         }
 
-        public virtual IActionResult CreateTeam(Team team)
+        [HttpPost]
+        public virtual IActionResult CreateTeam([FromBody] Team team)
         {
             repository.Add(team);
             return this.Created($"/teams/{team.ID}", team);
         }
 
+        [HttpGet("{id}")]
         public IActionResult GetTeam(Guid id)
         {
             Team team = repository.Get(id);
@@ -42,6 +45,7 @@ namespace TeamService.Controllers {
             }
         }
 
+        [HttpPut("{id}")]
         public virtual IActionResult UpdateTeam(Team team, Guid id)
         {
             team.ID = id;
@@ -56,6 +60,7 @@ namespace TeamService.Controllers {
             }
         }
 
+        [HttpDelete("{id}")]
         public virtual IActionResult DeleteTeam(Guid id)
         {
             Team team = repository.Delete(id);
