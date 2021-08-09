@@ -99,7 +99,40 @@ namespace Bos.TeamService.Tests {
             Guid newTeamId = Guid.NewGuid();
             Team newTeam = new Team("New Team", newTeamId);
             var result = controller.UpdateTeam(newTeam, newTeamId);
-            
+
+            Assert.True(result is NotFoundResult);
+        }
+
+        [Fact]
+        public void DeleteTeamRemovesFromList()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            var teams = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult).Value;
+            int ct = teams.Count();
+
+            string sampleName = "sample";
+            Guid id = Guid.NewGuid();
+            Team sampleTeam = new Team(sampleName, id);
+            controller.CreateTeam(sampleTeam);
+
+            teams = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult).Value;
+            sampleTeam = teams.FirstOrDefault(target => target.Name == sampleName);
+            Assert.NotNull(sampleTeam);
+
+            controller.DeleteTeam(id);
+
+            teams = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult).Value;
+            sampleTeam = teams.FirstOrDefault(target => target.Name == sampleName);
+            Assert.Null(sampleTeam);
+        }
+
+        [Fact]
+        public void DeleteNonExistentTeamReturnsNotFound()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            Guid id = Guid.NewGuid();
+
+            var result = controller.DeleteTeam(id);
             Assert.True(result is NotFoundResult);
         }
     }

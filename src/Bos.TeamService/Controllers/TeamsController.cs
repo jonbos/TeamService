@@ -55,5 +55,12 @@ namespace TeamService.Controllers {
                 return this.Ok(team);
             }
         }
+
+        public virtual IActionResult DeleteTeam(Guid id)
+        {
+            Team team = repository.Delete(id);
+
+            return team != null ? this.Ok(team) : this.NotFound();
+        }
     }
 }
