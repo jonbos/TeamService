@@ -1,0 +1,47 @@
+box: mcr.microsoft.com/dotnet/sdk
+no-response-timeout: 10
+build:
+  steps:
+    - script:
+        name: restore
+        cwd: src/Bos.TeamService
+        code: |
+          dotnet restore
+    - script:
+        name: build
+        cwd: src/Bos.TeamService
+        code: |
+          dotnet build
+    - script:
+        name: test-publish
+        cwd: test/Bos.TeamService.Tests
+        code: |
+          dotnet publish -o publish
+    - script:
+        name: test-restore
+        cwd: test/Bos.TeamService.Tests
+        code: |
+          dotnet restore
+    - script:
+        name: test-build
+        cwd: test/Bos.TeamService.Tests
+        code: |
+          dotnet build
+    - script:
+        name: test-run
+        cwd: src/Bos.TeamService
+        code: |
+          dotnet publish -o test
+    - script:
+        name: copy binary
+        code: |
+          cp -r . $WERCKER_OUTPUT_DIR/app
+          cd $WERCKER_OUTPUT_DIR/app
+deploy:
+  steps:
+    - internal/docker-push:
+      # specify the image to be pushed - this is the one we created earlier
+      username: $USERNAME # Registry username  
+      password: $PASSWORD # Registry password
+      registry: https://registry.hub.docker.com/v2
+      repository: $USERNAME/teamservice
