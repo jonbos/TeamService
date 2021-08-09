@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bos.TeamService", "src\Bos.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bos.TeamService.Tests", "test\Bos.TeamService.Tests\Bos.TeamService.Tests.csproj", "{CA0E9249-C716-4E0C-A66C-FCD31A739FDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bos.TeamService.Tests.Integration", "test\Bos.TeamService.Tests.Integration\Bos.TeamService.Tests.Integration.csproj", "{9C69BDEB-AE15-4ED0-96F5-1EEEEBFCF756}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{CA0E9249-C716-4E0C-A66C-FCD31A739FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA0E9249-C716-4E0C-A66C-FCD31A739FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA0E9249-C716-4E0C-A66C-FCD31A739FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C69BDEB-AE15-4ED0-96F5-1EEEEBFCF756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C69BDEB-AE15-4ED0-96F5-1EEEEBFCF756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C69BDEB-AE15-4ED0-96F5-1EEEEBFCF756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C69BDEB-AE15-4ED0-96F5-1EEEEBFCF756}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
