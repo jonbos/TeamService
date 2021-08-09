@@ -24,7 +24,7 @@ namespace TeamService.Controllers {
 
         public virtual IActionResult CreateTeam(Team team)
         {
-            repository.AddTeam(team);
+            repository.Add(team);
             return this.Created($"/teams/{team.ID}", team);
         }
 
@@ -39,6 +39,20 @@ namespace TeamService.Controllers {
             else
             {
                 return this.NotFound();
+            }
+        }
+
+        public virtual IActionResult UpdateTeam(Team team, Guid id)
+        {
+            team.ID = id;
+
+            if (repository.Update(team) == null)
+            {
+                return this.NotFound();
+            }
+            else
+            {
+                return this.Ok(team);
             }
         }
     }

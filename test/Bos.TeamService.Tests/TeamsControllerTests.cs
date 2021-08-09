@@ -60,5 +60,30 @@ namespace Bos.TeamService.Tests {
             var sampleTeam = newTeams.FirstOrDefault(target => target.Name == "sample");
             Assert.NotNull(sampleTeam);
         }
+
+
+        [Fact]
+        public void UpdateTeamModifiesTeamToList()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            var teams = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult).Value;
+            List<Team> original = new List<Team>(teams);
+
+            Guid id = Guid.NewGuid();
+            Team t = new Team("sample", id);
+            controller.CreateTeam(t);
+
+            Team newTeam = new Team("sample2", id);
+            controller.UpdateTeam(newTeam, id);
+
+
+            var newTeamsRaw = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult)?.Value;
+            var newTeams = new List<Team>(newTeamsRaw);
+            var sampleTeam = newTeams.FirstOrDefault(target => target.Name == "sample");
+            Assert.Null(sampleTeam);
+
+            var retrievedTeam = (Team) (controller.GetTeam(id) as ObjectResult)?.Value;
+            Assert.Equal("sample2", retrievedTeam?.Name);
+        }
     }
 }
