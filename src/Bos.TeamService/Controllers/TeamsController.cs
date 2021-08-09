@@ -3,18 +3,43 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TeamService.Models;
+using TeamService.Persistence;
 
 namespace TeamService.Controllers {
-    public class TeamsController {
-        public TeamsController()
+    public class TeamsController : Controller {
+        ITeamRepository repository;
+
+        public TeamsController(ITeamRepository repo)
         {
+            repository = repo;
         }
 
         [HttpGet]
-        public IEnumerable<Team> GetAllTeams()
+        public virtual IActionResult GetAllTeams()
         {
-            return new Team[] {new Team("one"), new Team("two")};
+            return this.Ok(repository.GetTeams());
+        }
+
+        public virtual IActionResult CreateTeam(Team team)
+        {
+            repository.AddTeam(team);
+            return this.Created($"/teams/{team.ID}", team);
+        }
+
+        public IActionResult GetTeam(Guid id)
+        {
+            Team team = repository.Get(id);
+
+            if (team != null) // I HATE NULLS, MUST FIXERATE THIS.			  
+            {
+                return this.Ok(team);
+            }
+            else
+            {
+                return this.NotFound();
+            }
         }
     }
 }
