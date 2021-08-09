@@ -85,5 +85,22 @@ namespace Bos.TeamService.Tests {
             var retrievedTeam = (Team) (controller.GetTeam(id) as ObjectResult)?.Value;
             Assert.Equal("sample2", retrievedTeam?.Name);
         }
+
+        [Fact]
+        public void UpdateNonExistentTeamReturnsNotFound()
+        {
+            TeamsController controller = new TeamsController(new TestMemoryRepository.TestMemoryTeamRepository());
+            var teams = (IEnumerable<Team>) (controller.GetAllTeams() as ObjectResult).Value;
+            List<Team> original = new List<Team>(teams);
+
+            Team someTeam = new Team("A Team", Guid.NewGuid());
+            controller.CreateTeam(someTeam);
+
+            Guid newTeamId = Guid.NewGuid();
+            Team newTeam = new Team("New Team", newTeamId);
+            var result = controller.UpdateTeam(newTeam, newTeamId);
+            
+            Assert.True(result is NotFoundResult);
+        }
     }
 }
