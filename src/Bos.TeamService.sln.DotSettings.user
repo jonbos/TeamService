@@ -1,6 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=30643c68_002D2886_002D4c9d_002Dbbb3_002D214d5a5e089b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="QueryTeamListReturnsCorrectTeams" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::DF6FD82E-8908-46CB-9801-E23F99AD5E34::net5.0::Bos.TeamService.Tests.UnitTest1.QueryTeamListReturnsCorrectTeams&lt;/TestId&gt;
-  &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
