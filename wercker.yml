@@ -16,7 +16,12 @@ build:
         name: publish
         cwd: src/Bos.TeamService
         code: |
-          dotnet publish -o publish
+          dotnet publish -o publish    
+    - script:
+        name: chmod
+        cwd: src/Bos.TeamService
+        code: |
+          chmod +x ./docker_entrypoint.sh
     - script:
         name: test-restore
         cwd: test/Bos.TeamService.Tests
