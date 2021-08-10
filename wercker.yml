@@ -11,10 +11,10 @@ build:
         name: build
         cwd: src/Bos.TeamService
         code: |
-          dotnet build
+          dotnet build  
     - script:
-        name: test-publish
-        cwd: test/Bos.TeamService.Tests
+        name: publish
+        cwd: src/Bos.TeamService
         code: |
           dotnet publish -o publish
     - script:
@@ -33,6 +33,11 @@ build:
         code: |
           dotnet test
     - script:
+        name: copy binary
+        cwd: src/Bos.TeamService
+        code: |
+          cp -r . "$WERCKER_OUTPUT_DIR"/app 
+    - script:
         name: integration-test-restore
         cwd: test/Bos.TeamService.Tests.Integration
         code: |
@@ -47,16 +52,12 @@ build:
         cwd: test/Bos.TeamService.Tests.Integration
         code: |
           dotnet test
-    - script:
-        name: copy binary
-        code: |
-          cp -r . $WERCKER_OUTPUT_DIR/app
-          cd $WERCKER_OUTPUT_DIR/app
 deploy:
   steps:
     - internal/docker-push:
-      # specify the image to be pushed - this is the one we created earlier
-      username: $USERNAME # Registry username  
-      password: $PASSWORD # Registry password
-      registry: https://registry.hub.docker.com/v2
-      repository: $USERNAME/teamservice
+        cwd: $WERCKER_OUTPUT_DIR/app
+        username: $USERNAME # Registry username  
+        password: $PASSWORD # Registry password
+        repository: $USERNAME/teamservice
+        registry: https://registry.hub.docker.com/v2
+        entrypoint: "/pipeline/source/app/docker_entrypoint.sh"
